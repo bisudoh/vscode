@@ -6,8 +6,8 @@ Official VS Code Server in Docker with WebSocket support, full extension compati
 
 ```bash
 # Pull and run
-docker pull ghcr.io/nerasse/my-code-server:main
-docker run -d -p 8585:8585 -e TOKEN=yourtoken ghcr.io/nerasse/my-code-server:main
+docker pull ghcr.io/bisudoh/vscode:main
+docker run -d -p 8585:8585 -e TOKEN=yourtoken ghcr.io/bisudoh/vscode:main
 
 # Or with docker-compose
 docker compose up -d
@@ -26,17 +26,17 @@ Access: `http://localhost:8585?tkn=yourtoken`
 ### Option 1: Using Pre-built Image
 
 ```bash
-docker pull ghcr.io/nerasse/my-code-server:main
+docker pull ghcr.io/bisudoh/vscode:main
 ```
 
 ### Option 2: Build Locally
 
 ```bash
 # Using buildx (recommended)
-docker buildx build -t my-code-server:main .
+docker buildx build -t vscode:main .
 
 # Or using legacy builder
-docker build -t my-code-server:main .
+docker build -t vscode:main .
 ```
 
 ## Usage
@@ -71,7 +71,7 @@ volumes:
 docker run -d -p 8585:8585 \
   -e PORT=8585 \
   -e TOKEN=sometoken \
-  my-code-server:main
+  vscode:main
 ```
 
 **With volumes and custom UID/GID:**
@@ -82,7 +82,7 @@ docker run -d -p 8585:8585 \
   -e PUID=$(id -u) \
   -e PGID=$(id -g) \
   -v /path/to/your/data:/home/vscodeuser \
-  my-code-server:main
+  vscode:main
 ```
 
 ## Configuration
@@ -129,7 +129,7 @@ The container will automatically adjust user permissions at startup.
 
 ### Network Configuration
 
-- Container name: `my-code-server`
+- Container name: `vscode-server`
 - Network: `vscode-server-network`
 
 ### HTTP Configuration
@@ -137,7 +137,7 @@ The container will automatically adjust user permissions at startup.
 ```nginx
 server {
     listen 80;
-    server_name my-code-server.domain.com;
+    server_name vscode.domain.com;
 
     location / {
         proxy_pass http://my-code-server.vscode-server-network:8585;
@@ -159,7 +159,7 @@ server {
 ```nginx
 server {
     listen 443 ssl;
-    server_name my-code-server.domain.com;
+    server_name vscode.domain.com;
 
     ssl_certificate /ssl/.domain.com.cer;
     ssl_certificate_key /ssl/.domain.com.key;
